@@ -1,0 +1,11 @@
+*.pyc
+*.rdb
+*.swp
+
+# macOS
+.DS_Store
+
+sensitive.txt
+
+# alembic version folder 
+versions/

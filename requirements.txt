@@ -1,0 +1,6 @@
+tornado==4.3
+PyMySQL==0.7.11
+SQLAlchemy==1.1.9
+alembic==0.9.1
+mock==2.0.0
+SQLAlchemy-Utils==0.32.14
