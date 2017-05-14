@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no">
+    <title>手机网站支付</title>
+    <link rel="stylesheet" type="text/css" href="/static/main.css">
+</head>
+<body>
+<div class="head">
+    <span>提交订单</span>
+</div>
+<div class="container">
+    <form>
+    <div class="product-section item">
+        <div class="title" id="product-title">遥控飞机高清航拍无人机</div>
+        <div class="price yuan" id="price">0.01</div>
+    </div>
+    <div class="quantity-section item">
+        <div class="inline">数量：</div>
+        <div class="inline quantity">
+            <a href="javascript:void(0);" id="reduce">-</a>
+
+            <!-- <button id="reduce">-</button> -->
+            <input type="text" value="1" id="quantity" onfocus="this.blur()" readonly></input>
+            <!-- <button id="add">+</button> -->
+            <a href="javascript:void(0);" id="add">+</a>
+        </div>
+    </div>
+    <div class="item total-price-section">
+        <div class="inline">总计：</div>
+        <div class="inline price yuan right" id="total-price">0.01</div>
+    </div>
+    </form>
+    <div class="separation-section"></div>
+    <div class="pay-style-section item clearfix">
+        <div class="text left">支付方式：</div>
+        <div class="ali-logo left">
+            <img src="/static/ali-logo.png">
+        </div>
+        <div style="font-family: 'Glyphicons Halflings';content: "\e013";">
+        </div>
+    </div>
+    <div class="pay-section">
+        <button id="do-pay">去支付</button>
+    </div>
+</div>
+</body>
+<script>
+function calculateTotalPrice(quantity){
+    var price = document.getElementById("price").textContent;
+    var totalPrice = parseFloat(price) * quantity;
+    document.getElementById("total-price").textContent = totalPrice;
+}
+
+function changeQuantity(value){
+    dom = document.getElementById("quantity");
+    currentValue = parseInt(dom.value);
+    var quantity = currentValue + value;
+
+    dom.value = quantity.toString();
+    return quantity;
+}
+
+function add(){
+    quantity = changeQuantity(1);
+    if (quantity == 2){
+        enableReduceEvent();
+    }
+    calculateTotalPrice(quantity);
+}
+
+function reduce(){
+    quantity = changeQuantity(-1);
+    if (quantity == 1) {
+        disableReduceEvent();
+    }
+    calculateTotalPrice(quantity);
+}
+
+function disableReduceEvent() {
+    document.getElementById("reduce").classList.add("disabled");
+}
+
+function enableReduceEvent() {
+    document.getElementById("reduce").classList.remove("disabled");
+}
+
+function doPay(){
+    function handleResponse(resp){
+        window.location = resp.url;
+    }
+
+    var totalPrice = document.getElementById("total-price").textContent;
+    var productTitle = document.getElementById("product-title").textContent;
+
+    var data = {
+        "fee": totalPrice,
+        "title": productTitle
+    }
+
+    postRequest("/trade", data, handleResponse);
+}
+
+function postRequest(url, raw_data, callback){
+    var client = new XMLHttpRequest();
+    client.open('POST', url, true);
+    client.setRequestHeader("Content-Type","application/json; charset=utf8;");
+
+    var data = JSON.stringify(raw_data);
+    client.send(data);
+    client.onreadystatechange = function() {
+        if (client.readyState == 4) {
+            callback(JSON.parse(client.responseText));
+        }
+    }
+}
+
+window.onload = function(){
+    var dom = {
+        "addBtn": document.getElementById("add"),
+        "reduceBtn": document.getElementById("reduce"),
+        "doPayBtn": document.getElementById("do-pay"),
+    }
+
+    dom.addBtn.addEventListener("click", add);
+    dom.reduceBtn.addEventListener("click", reduce);
+    dom.doPayBtn.addEventListener("click", doPay);
+    disableReduceEvent();
+}
+</script>
+</html>
