@@ -23,7 +23,7 @@
 
 ## 使用
 
-1、生成RSA密钥，使用`scripts/generate_RSA.py`或者使用[支付宝提供一键生成工具](ttps://doc.open.alipay.com/docs/doc.htm?treeId=291&articleId=105971&docType=1)，把应用公钥和私钥分别保存在`config/app_public_key.crt`和`config/app_private_key.crt`文件上
+1、生成RSA密钥，使用`scripts/generate_RSA.py`或者使用[支付宝提供一键生成工具](https://doc.open.alipay.com/docs/doc.htm?treeId=291&articleId=105971&docType=1)，把应用公钥和私钥分别保存在`config/app_public_key.crt`和`config/app_private_key.crt`文件上
 
 2、前往支付宝开放平台开发者中心进行密钥配置，提供自己的公钥，配置完成后可以获取支付宝公钥，把支付宝的公钥保存在`config/ali_public_key.crt`文件上
 
