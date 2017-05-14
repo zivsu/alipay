@@ -11,6 +11,6 @@
 
 ### 下面是图片演示的流程
 
-<img src="step1.jpeg" style="max-width:33%;width: 150px;"/>
-<img src="step2.jpeg" style="max-width:33%;width: 150px;"/>
-<img src="step3.jpeg" style="max-width:33%;width: 150px;"/>
+<img src="step1.jpeg" width="200"/>
+<img src="step2.jpeg" width="200"/>
+<img src="step3.jpeg" width="200"/>
