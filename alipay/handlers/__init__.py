@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 # coding:utf-8
+from __future__ import unicode_literals
 
 import traceback
 import logging
 
 from tornado.options import options
 from tornado.web import RequestHandler, HTTPError
+import netifaces
 
 import config
 from handlers.validation import ValidationMixin
@@ -25,7 +27,11 @@ class BaseHandler(RequestHandler, ValidationMixin):
 
     @property
     def host(self):
-        return self.request.protocol + "://" + self.request.host
+        if options.env == config.ENV_LOCAL:
+            host = netifaces.ifaddresses('en0')[2][0]['addr'] + ":" + options.port
+        else:
+            host = self.request.host
+        return self.request.protocol + "://" + host
 
     def load_json(self):
         """Load JSON from the request body and store them in
@@ -97,7 +103,7 @@ def authenticated(function):
         arguments = handler.request.arguments
         # Remove `sign` and `sign_type`
         items = sorted([(k, v[0]) for k, v in arguments.items() if "sign" not in k])
-        message = "&".join(["{}={}".format(k,v) for k,v in items])
+        message = "&".join(["{}={}".format(k,v.decode("utf-8")) for k,v in items])
 
         signature = handler.get_argument("sign", "")
         charset = handler.get_argument("charset", "utf-8")

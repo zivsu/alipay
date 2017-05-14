@@ -139,16 +139,16 @@ class WapPayNotifyHandler(APIPayHandler):
 
         # Validate trade ID and total fee.
         trade = self.db.query(Trade).filter_by(trade_id=trade_id).first()
-        if trade is None or float(fee) != trade.fee:
+        if trade is None or float(fee) != float(trade.fee):
             # Notice is an exception notification, should be ignore.
-            logging.info("exception notificaton, trade_id:{}".format(trade_id))
-            return self.write("success")
+            logging.exception("exception notificaton, trade_id:{}".format(trade_id))
+            return self.finish("success")
 
         # Validate seller ID.
         if seller_id is not None and seller_id != config.ali_seller_id:
             # Notice is an exception notification, should be ignore.
-            logging.info("exception notificaton, trade_id:{}".format(trade_id))
-            return self.write("success")
+            logging.exception("exception notificaton, trade_id:{}".format(trade_id))
+            return self.finish("success")
 
         utcnow = util.utcnow()
 
