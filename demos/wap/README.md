@@ -3,7 +3,7 @@
 
 ### 主要是为了调用alipay这个项目做个示例
 
-1. 跑起alipay server的前提下，运行程序
+1. 运行alipay server的前提下，运行程序
 
 	执行`python index.py`
 
@@ -11,6 +11,6 @@
 
 ### 下面是图片演示的流程
 
-<img src="step1.jpeg" alt="uriurnurl" style="width: 200px;"/>
-<img src="step2.jpeg" alt="uriurnurl" style="width: 200px;"/>
-<img src="step3.jpeg" alt="uriurnurl" style="width: 200px;"/>
+<img src="step1.jpeg" style="width: 48;"/>
+<img src="step2.jpeg" style="width: 48;"/>
+<img src="step3.jpeg" style="width: 48;"/>
