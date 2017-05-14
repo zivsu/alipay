@@ -46,12 +46,12 @@ class TestWapHandler(BaseHTTPTestCase):
         trade_id, fee = self.new_trade()
 
         query_params = {
-            "app_id": "2016080300160303",
-            "auth_app_id": "2016080300160303",
+            "app_id": config.ali_app_id,
+            "auth_app_id": config.ali_app_id,
             "charset": "utf-8",
             "method": "alipay.trade.wap.pay.return",
             "out_trade_no": trade_id,
-            "seller_id": "2088102169818202",
+            "seller_id": config.ali_seller_id,
             "timestamp": "2017-04-03 02:00:09",
             "total_amount": fee,
             "trade_no": "2017040321001004890200292043",
