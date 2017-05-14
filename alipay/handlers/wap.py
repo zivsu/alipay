@@ -49,7 +49,6 @@ class WapPayHandler(APIPayHandler):
           raise HTTPError(422, "Validation Failed", reason=reason)
 
         timeout = "{}m".format(str(timeout))
-        title = title.encode("utf-8")
 
         notify_url = self.notify_host + URL_WAP_PAY_NOTIFY
         alipay = AliWapPay(notify_url=notify_url,
@@ -89,7 +88,7 @@ class WapPayHandler(APIPayHandler):
 
         self.db.add_all([product, trade])
         self.db.commit()
-        self.write(config.ali_gateway + "?" + trade_qs)
+        self.finish(config.ali_gateway + "?" + trade_qs)
 
 
 class WapPayCallbackHandler(APIPayHandler):

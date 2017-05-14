@@ -19,7 +19,6 @@ class TestWapHandler(BaseHTTPTestCase):
         }
         query_string = "&".join(["{}={}".format(k, quote_plus(v)) for k, v in query_params.items()])
         url = "/trade/wap/pay?{}".format(query_string)
-        print url
         self.get(url)
         return trade_id, fee
 

@@ -10,7 +10,7 @@ from sqlalchemy_utils import database_exists, create_database
 
 import config
 
-DB_URL = "{}://{}:{}@{}:{}/{}".format(
+DB_URL = "{}://{}:{}@{}:{}/{}?charset=utf8&use_unicode=0".format(
     config.db["driver"],
     config.db["username"],
     config.db["password"],
@@ -20,6 +20,6 @@ DB_URL = "{}://{}:{}@{}:{}/{}".format(
 )
 
 BaseModel = declarative_base()
-engine = create_engine(DB_URL, encoding="utf-8")
+engine = create_engine(DB_URL)
 if not database_exists(engine.url): create_database(engine.url)
 DBSession = sessionmaker(bind=engine)
