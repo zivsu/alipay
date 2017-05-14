@@ -20,9 +20,6 @@ DB_URL = "{}://{}:{}@{}:{}/{}".format(
 )
 
 BaseModel = declarative_base()
-engine = create_engine(DB_URL)
+engine = create_engine(DB_URL, encoding="utf-8")
 if not database_exists(engine.url): create_database(engine.url)
 DBSession = sessionmaker(bind=engine)
-
-# print DBSession().query_property(Query)
-# BaseModel.query = DBSession().query_property(Query)
