@@ -27,7 +27,7 @@ class WapPayHandler(APIPayHandler):
     def get(self):
         trade_id = self.valid("trade_id")
         title = self.valid("title")
-        fee = self.valid("fee", force_type=int,
+        fee = self.valid("fee", force_type=float,
                          validator=RangeValidator(0.01, 100000000).validate)
         show_url = self.valid("show_url")
         # Minutes as the calculating unit.
@@ -49,6 +49,7 @@ class WapPayHandler(APIPayHandler):
           raise HTTPError(422, "Validation Failed", reason=reason)
 
         timeout = "{}m".format(str(timeout))
+        title = title.encode("utf-8")
 
         notify_url = self.notify_host + URL_WAP_PAY_NOTIFY
         alipay = AliWapPay(notify_url=notify_url,
@@ -88,7 +89,7 @@ class WapPayHandler(APIPayHandler):
 
         self.db.add_all([product, trade])
         self.db.commit()
-        self.redirect(config.ali_gateway + "?" + trade_qs)
+        self.write(config.ali_gateway + "?" + trade_qs)
 
 
 class WapPayCallbackHandler(APIPayHandler):
